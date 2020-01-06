@@ -38,7 +38,6 @@ def calculClasse(distances):
 
     index = distances.index(min(distances))
 
-    print(index)
     return int(index / 25)
 
 
@@ -46,19 +45,14 @@ if __name__ == "__main__":
     print("Début programme kPPV")
     dataset = lectureFichierCSV()
 
-    a = [1.1,1.1,1.1,1.1]
-    b = [2.2,2.2,2.2,2.2]
-    c = range(4)
-    d = [3.3,3.3,3.3,3.3]
+    confusion = []
+    for i in range(25,50) + range(75, 100) + range(125, 150):
+        classe = calculClasse(calculDistances(dataset[i], dataset))
+        if int(i/50) == classe:
+            confusion.append([True, classe, int(i/25), i])
+        else:
+            confusion.append([False, classe, int(i/25), i])
 
-    distances = calculDistances(d, dataset)
-
-    classe = calculClasse(distances)
-
-    print(classe)
-
-    # Calcule et affiche la matrice de confusion et le taux de reco
-    
-    # -------- A faire... --------
+    print(confusion)
 
 # --------------------------------- Fin kPPV -----------------------------------
