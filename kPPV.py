@@ -2,6 +2,7 @@
 """ programme à compléter du kPPV"""
 import csv
 import math as m
+from array import *
 
 nbExParClasse = 50
 nbApprent = 25
@@ -40,19 +41,22 @@ def calculClasse(distances):
 
     return int(index / 25)
 
+def calcul_taux_reco(confusion):
+    """ retourne le taux de reconnaissance d'une matrice de confusion"""
+
+    return float(sum([confusion[i][i] for i in range(len(confusion))])) / sum([confusion[i][j] for i in range(len(confusion)) for j in range(len(confusion))])
+
 
 if __name__ == "__main__":
     print("Début programme kPPV")
     dataset = lectureFichierCSV()
 
-    confusion = []
-    for i in range(25,50) + range(75, 100) + range(125, 150):
-        classe = calculClasse(calculDistances(dataset[i], dataset))
-        if int(i/50) == classe:
-            confusion.append([True, classe, int(i/25), i])
-        else:
-            confusion.append([False, classe, int(i/25), i])
+    confusion = [[0,0,0],[0,0,0],[0,0,0]]
+
+    for i in range(25,50) + range(75, 100) + range(125,150):
+        confusion[int(i/50)][calculClasse(calculDistances(dataset[i], dataset))] += 1
 
     print(confusion)
+    print(calcul_taux_reco(confusion))
 
 # --------------------------------- Fin kPPV -----------------------------------
