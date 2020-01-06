@@ -2,7 +2,8 @@
 """ programme à compléter du kPPV"""
 import csv
 import math as m
-from array import *
+
+import numpy as np
 
 nbExParClasse = 50
 nbApprent = 25
@@ -62,13 +63,36 @@ def calcul_taux_reco(confusion):
 if __name__ == "__main__":
     print("Début programme kPPV")
     dataset = lectureFichierCSV()
+    confu = np.zeros(shape=(3,3))
 
-    confusion = [[0,0,0],[0,0,0],[0,0,0]]
+    for i in range(25, 50) :
+        classe = calculClasse(calculDistances(dataset[i], dataset))
+        if classe == 0:
+            confu[0][0] = confu[0][0] + 1
+        elif classe == 1:
+            confu[0][1] = confu[0][1] + 1
+        elif classe == 2:
+            confu[0][2] = confu[0][2] + 1
 
-    for i in range(25,50) + range(75, 100) + range(125,150):
-        confusion[int(i/50)][calculClasse(calculDistances(dataset[i], dataset))] += 1
+    for i in range(75, 100) :
+        classe = calculClasse(calculDistances(dataset[i], dataset))
+        if classe == 1:
+            confu[1][1] = confu[1][1] + 1
+        elif classe == 0:
+            confu[1][0] = confu[1][0] + 1
+        elif classe == 2:
+            confu[1][2] = confu[1][2] + 1
 
-    print(confusion)
-    print(calcul_taux_reco(confusion))
+    for i in range(125, 150):
+        classe = calculClasse(calculDistances(dataset[i], dataset))
+        if classe == 2:
+            confu[2][2] = confu[2][2] + 1
+        elif classe == 0:
+            confu[2][0] = confu[2][0] + 1
+        elif classe == 1:
+            confu[2][1] = confu[2][1] + 1
+
+    print(confu)
+
 
 # --------------------------------- Fin kPPV -----------------------------------
