@@ -36,16 +36,26 @@ def calculDistances(data, dataset):
 def calculClasse(distances):
     """ retourne le numéro de la classe déterminé à partir des distances """
 
+    index = distances.index(min(distances))
 
-
-    return(classe)
+    print(index)
+    return int(index / 25)
 
 
 if __name__ == "__main__":
     print("Début programme kPPV")
     dataset = lectureFichierCSV()
 
-    print(len(calculDistances([1.1,1.1,1.1,1.1], dataset)))
+    a = [1.1,1.1,1.1,1.1]
+    b = [2.2,2.2,2.2,2.2]
+    c = range(4)
+    d = [3.3,3.3,3.3,3.3]
+
+    distances = calculDistances(d, dataset)
+
+    classe = calculClasse(distances)
+
+    print(classe)
 
     # Calcule et affiche la matrice de confusion et le taux de reco
     
